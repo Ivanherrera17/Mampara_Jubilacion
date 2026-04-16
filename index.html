@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Diseñador de Mamparas – Zona Escolar 40</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#faf8f3;color:#1c2541;min-height:100vh}
+header{background:linear-gradient(135deg,#1c2541 0%,#263352 100%);padding:14px 24px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 20px rgba(28,37,65,.25)}
+.header-ico{font-size:30px}
+.header-title{font-family:'Playfair Display',serif;color:#c9a846;font-size:19px;font-weight:700;letter-spacing:.02em}
+.header-sub{color:#8892b0;font-size:11.5px;margin-top:1px}
+.layout{display:flex;min-height:calc(100vh - 62px)}
+aside{width:210px;background:white;border-right:1px solid #ede8d8;padding:14px 10px;display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+.aside-label{font-size:10.5px;font-weight:700;color:#b0a898;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px 4px}
+.tb{display:flex;align-items:center;gap:9px;padding:9px 14px;border:none;background:transparent;color:#7c8499;cursor:pointer;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13.5px;transition:all .18s;width:100%;text-align:left;font-weight:500}
+.tb:hover{background:#f5eed8;color:#1c2541}
+.tb.act{background:linear-gradient(135deg,#c9a846,#e0b84e);color:#1c2541;font-weight:600;box-shadow:0 2px 8px rgba(201,168,70,.3)}
+main{flex:1;padding:24px 28px;overflow:auto}
+.page{display:none}.page.active{display:block;animation:fi .35s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:white;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(28,37,65,.07)}
+.bp{background:linear-gradient(135deg,#c9a846,#e0b84e);color:#1c2541;border:none;padding:9px 20px;border-radius:9px;cursor:pointer;font-weight:600;font-family:'DM Sans',sans-serif;font-size:13.5px;transition:all .2s;white-space:nowrap}
+.bp:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,168,70,.45)}
+.bs{background:white;color:#1c2541;border:1.5px solid #e2d8c0;padding:7px 14px;border-radius:9px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;transition:all .18s}
+.bs:hover{border-color:#c9a846;color:#c9a846;background:#fffdf5}
+.inp{width:100%;padding:8px 12px;border:1.5px solid #e2d8c0;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:#1c2541;background:white;transition:border-color .18s;outline:none}
+.inp:focus{border-color:#c9a846}
+select.inp{cursor:pointer}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;margin-bottom:20px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.hov-card{transition:transform .18s,box-shadow .18s;cursor:pointer}
+.hov-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,70,.18)!important}
+.tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.chip{display:inline-block;padding:5px 11px;border-radius:20px;font-size:12px;cursor:pointer;border:1.5px solid #e2d8c0;background:white;transition:all .15s;font-family:'DM Sans',sans-serif;color:#4b5563}
+.chip:hover{border-color:#c9a846;color:#c9a846;background:#fffdf5}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#f0e8d0}::-webkit-scrollbar-thumb{background:#c9a846;border-radius:3px}
+h2{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:6px}
+.mb6{margin-bottom:6px}.mb8{margin-bottom:8px}.mb10{margin-bottom:10px}.mb12{margin-bottom:12px}.mb14{margin-bottom:14px}.mb16{margin-bottom:16px}.mb20{margin-bottom:20px}
+.flex{display:flex}.gap8{gap:8px}.gap9{gap:9px}.gap14{gap:14px}.gap16{gap:16px}.gap20{gap:20px}
+.ai-chat{display:flex;flex-direction:column;height:calc(100vh - 160px)}
+.ai-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:14px;padding-right:4px}
+.ai-input-row{display:flex;gap:9px}
+.msg-user{display:flex;justify-content:flex-end}
+.msg-ai{display:flex;justify-content:flex-start;align-items:flex-start;gap:8px}
+.msg-bubble-user{max-width:75%;padding:12px 16px;border-radius:12px;font-size:13.5px;line-height:1.7;white-space:pre-wrap;background:linear-gradient(135deg,#c9a846,#e0b84e);color:#1c2541}
+.msg-bubble-ai{max-width:75%;padding:12px 16px;border-radius:12px;font-size:13.5px;line-height:1.7;white-space:pre-wrap;background:white;color:#1c2541;border:1.5px solid #e2d8c0;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.ai-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#c9a846,#e0b84e);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:4px}
+.pal-card{border:2px solid transparent;transition:all .18s;cursor:pointer}
+.pal-card:hover{transform:translateY(-2px)}
+.pal-card.sel{border-color:#c9a846!important}
+#canvas-wrap{position:relative}
+canvas{display:block;border-radius:10px;max-width:100%;cursor:default;user-select:none}
+.layers-item{padding:7px 10px;border-radius:8px;cursor:pointer;margin-bottom:4px;font-size:13px;display:flex;align-items:center;gap:8px;transition:all .15s;overflow:hidden;border:1.5px solid transparent}
+.layers-item:hover{background:#fffdf0}
+.layers-item.sel{background:#fffdf0;border-color:#c9a846}
+.layers-item span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.editor-wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.info-box{border-radius:14px;overflow:hidden;box-shadow:0 8px 32px rgba(28,37,65,.18);margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-ico">🎓</div>
+  <div>
+    <div class="header-title">Diseñador de Mamparas</div>
+    <div class="header-sub">Zona Escolar 40 · Región Ojocaliente, Zacatecas</div>
+  </div>
+  <button class="bp" style="margin-left:auto;display:flex;align-items:center;gap:7px;font-size:13px" onclick="autoDesign()">⚡ Generar diseño recomendado</button>
+</header>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="aside-label">Herramientas</div>
+    <button class="tb act" onclick="goTab('inicio')">🏠 Inicio</button>
+    <button class="tb" onclick="goTab('galeria')">📂 Galería</button>
+    <button class="tb" onclick="goTab('editor')">🖼️ Editor Visual</button>
+    <button class="tb" onclick="goTab('paleta')">🎨 Paletas</button>
+    <button class="tb" onclick="goTab('tipografia')">🔤 Tipografía</button>
+    <button class="tb" onclick="goTab('materiales')">🧱 Materiales</button>
+    <button class="tb" onclick="goTab('asistente')">🤖 Asistente IA</button>
+    <button class="tb" onclick="goTab('exportar')">📥 Exportar</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- ═══ INICIO ═══ -->
+    <div id="page-inicio" class="page active">
+      <h2>Bienvenido al Diseñador 🎓</h2>
+      <p style="color:#6b7280;margin-bottom:24px;font-size:14px">Crea mamparas elegantes para el homenaje de jubilación docente, paso a paso.</p>
+      <div class="grid2" id="inicio-cards"></div>
+      <div class="card" style="background:linear-gradient(135deg,#1c2541,#263352);border-left:4px solid #c9a846">
+        <p style="font-family:'Playfair Display',serif;font-size:15px;color:#c9a846;margin-bottom:8px">💡 Principio de diseño clave</p>
+        <p style="font-size:13.5px;color:rgba(255,255,255,.85);line-height:1.7">Para una jubilación docente, equilibra <strong style="color:#c9a846">elegancia y emoción</strong>. Usa colores sobrios (azul marino, vino, dorado). Centra el nombre del homenajeado en tipografía grande y serif. Añade una frase emotiva en script. Deja espacios vacíos: <em style="color:#e8d5a3">menos es más</em>.</p>
+      </div>
+    </div>
+
+    <!-- ═══ GALERÍA ═══ -->
+    <div id="page-galeria" class="page">
+      <h2>Galería de Referencia 📂</h2>
+      <p style="color:#6b7280;margin-bottom:20px;font-size:14px">Sube imágenes de mamparas o decoraciones que te sirvan de inspiración.</p>
+      <label style="display:block;margin-bottom:20px;cursor:pointer">
+        <div class="card" style="border:2px dashed #c9a846;background:#fffdf5;text-align:center;padding:36px 20px">
+          <div style="font-size:44px;margin-bottom:10px">📸</div>
+          <h3 style="margin-bottom:6px;font-size:15px">Arrastra imágenes aquí o haz clic para subir</h3>
+          <p style="color:#9ba0a8;font-size:12.5px;margin-bottom:14px">PNG, JPG, GIF hasta 10MB</p>
+          <span class="bp">Seleccionar imágenes</span>
+        </div>
+        <input type="file" multiple accept="image/*" style="display:none" onchange="handleUpload(this)" />
+      </label>
+      <div class="grid3" id="gallery-grid">
+        <div class="card" id="gallery-empty" style="text-align:center;padding:40px;color:#9ba0a8;grid-column:1/-1">
+          <div style="font-size:40px;margin-bottom:8px">🖼️</div>
+          <p style="font-size:14px">Tu galería está vacía. Sube imágenes de referencia para comenzar.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ EDITOR ═══ -->
+    <div id="page-editor" class="page">
+      <h2>Editor Visual 🖼️</h2>
+      <p style="color:#6b7280;margin-bottom:20px;font-size:14px">Haz clic en un elemento para seleccionarlo. Arrástralo para reposicionarlo.</p>
+      <div class="editor-wrap">
+        <div class="card" style="padding:14px;flex-shrink:0">
+          <p style="font-size:11px;color:#9ba0a8;margin-bottom:8px;text-align:center">Vista previa de la mampara</p>
+          <canvas id="mampara-canvas" width="400" height="530"></canvas>
+        </div>
+        <div style="flex:1;min-width:250px;display:flex;flex-direction:column;gap:14px">
+          <!-- BG -->
+          <div class="card">
+            <h3 style="font-size:13.5px;font-weight:600;margin-bottom:12px">🎨 Color de fondo</h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center" id="bg-swatches"></div>
+          </div>
+          <!-- Add -->
+          <div class="card">
+            <h3 style="font-size:13.5px;font-weight:600;margin-bottom:10px">➕ Agregar elemento</h3>
+            <button class="bp" style="width:100%;margin-bottom:8px" onclick="addText()">+ Agregar texto</button>
+            <p style="font-size:11.5px;color:#9ba0a8;line-height:1.5">💡 Haz clic en el texto del canvas para seleccionarlo, luego arrástralo.</p>
+          </div>
+          <!-- Element editor -->
+          <div class="card" id="el-editor" style="border-left:3px solid #c9a846;display:none">
+            <h3 style="font-size:13.5px;font-weight:600;margin-bottom:12px">✏️ Editar elemento seleccionado</h3>
+            <div style="margin-bottom:9px">
+              <label style="font-size:11.5px;color:#6b7280;display:block;margin-bottom:4px">Texto</label>
+              <input class="inp" id="el-text" oninput="updateEl('text',this.value)" />
+            </div>
+            <div style="margin-bottom:9px">
+              <label style="font-size:11.5px;color:#6b7280;display:block;margin-bottom:4px">Fuente</label>
+              <select class="inp" id="el-font" onchange="updateEl('fontFamily',this.value)">
+                <option>Playfair Display</option>
+                <option>Cormorant Garamond</option>
+                <option>Great Vibes</option>
+                <option>Montserrat</option>
+                <option>Georgia</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:9px;margin-bottom:9px">
+              <div style="flex:1">
+                <label style="font-size:11.5px;color:#6b7280;display:block;margin-bottom:4px">Tamaño</label>
+                <input type="number" class="inp" id="el-size" min="6" max="120" oninput="updateEl('fontSize',+this.value)" />
+              </div>
+              <div>
+                <label style="font-size:11.5px;color:#6b7280;display:block;margin-bottom:4px">Color</label>
+                <input type="color" id="el-color" oninput="updateEl('color',this.value)" style="width:42px;height:38px;border:1.5px solid #e2d8c0;border-radius:9px;cursor:pointer;padding:2px" />
+              </div>
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:12px;cursor:pointer">
+              <input type="checkbox" id="el-bold" onchange="updateEl('bold',this.checked)" /> Negrita
+            </label>
+            <button class="bs" style="width:100%;color:#dc2626;border-color:#fecaca" onclick="deleteEl()">🗑️ Eliminar</button>
+          </div>
+          <!-- Layers -->
+          <div class="card">
+            <h3 style="font-size:13.5px;font-weight:600;margin-bottom:10px">📋 Capas</h3>
+            <div id="layers-list"></div>
+            <button class="bs" style="width:100%;margin-top:8px;font-size:12px" onclick="restoreElements()">↩ Restaurar diseño base</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PALETA ═══ -->
+    <div id="page-paleta" class="page">
+      <h2>Paletas de Color 🎨</h2>
+      <p style="color:#6b7280;margin-bottom:20px;font-size:14px">Combinaciones de colores elegantes para una jubilación formal.</p>
+      <div class="grid2" id="palette-grid"></div>
+      <div class="info-box" id="palette-preview"></div>
+      <div class="card">
+        <h3 style="font-size:14.5px;font-weight:600;margin-bottom:10px">💡 Por qué esta combinación funciona</h3>
+        <p id="palette-desc" style="font-size:13.5px;color:#4b5563;line-height:1.7"></p>
+      </div>
+    </div>
+
+    <!-- ═══ TIPOGRAFÍA ═══ -->
+    <div id="page-tipografia" class="page">
+      <h2>Guía de Tipografía 🔤</h2>
+      <p style="color:#6b7280;margin-bottom:20px;font-size:14px">Aprende qué fuentes usar y en qué tamaños según la jerarquía visual.</p>
+      <div class="card mb20" style="border-left:4px solid #c9a846">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:16px">📊 Jerarquía tipográfica recomendada</h3>
+        <div id="tipo-hierarchy"></div>
+      </div>
+      <div class="grid2 mb20" id="font-showcase"></div>
+      <div class="card" style="background:#fff8f8;border-left:4px solid #f87171">
+        <h3 style="font-size:14.5px;font-weight:600;margin-bottom:12px;color:#dc2626">⚠️ Errores tipográficos a evitar</h3>
+        <div id="tipo-errors"></div>
+      </div>
+    </div>
+
+    <!-- ═══ MATERIALES ═══ -->
+    <div id="page-materiales" class="page">
+      <h2>Guía de Materiales 🧱</h2>
+      <p style="color:#6b7280;margin-bottom:20px;font-size:14px">Materiales prácticos y económicos para producir tu mampara física.</p>
+      <div class="grid2" id="materials-grid"></div>
+      <div class="card" style="background:linear-gradient(135deg,#1c2541,#263352)">
+        <h3 style="font-family:'Playfair Display',serif;color:#c9a846;font-size:17px;margin-bottom:14px">💰 Presupuesto estimado (MXN)</h3>
+        <div class="grid3" id="budget-grid"></div>
+      </div>
+    </div>
+
+    <!-- ═══ ASISTENTE ═══ -->
+    <div id="page-asistente" class="page">
+      <h2>Asistente de Diseño IA 🤖</h2>
+      <p style="color:#6b7280;margin-bottom:12px;font-size:14px">Pregunta cualquier cosa sobre diseño de mamparas para jubilación docente.</p>
+      <div id="ai-chips" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px"></div>
+      <div class="ai-chat">
+        <div class="ai-messages" id="ai-messages">
+          <div class="card" id="ai-empty" style="text-align:center;padding:44px;color:#9ba0a8">
+            <div style="font-size:48px;margin-bottom:12px">🤖</div>
+            <p style="font-family:'Playfair Display',serif;font-size:17px;color:#1c2541;margin-bottom:8px">Hola, soy tu asistente de diseño</p>
+            <p style="font-size:13.5px;line-height:1.6">Pregúntame sobre paletas, tipografías, materiales o cualquier aspecto del diseño de tu mampara para jubilación docente.</p>
+          </div>
+        </div>
+        <div class="ai-input-row">
+          <input class="inp" id="ai-input" placeholder="Escribe tu pregunta sobre diseño de mamparas..." onkeydown="if(event.key==='Enter')sendMsg()" style="flex:1" />
+          <button class="bp" onclick="sendMsg()" id="ai-send" style="flex-shrink:0">Enviar →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ EXPORTAR ═══ -->
+    <div id="page-exportar" class="page">
+      <h2>Exportar Diseño 📥</h2>
+      <p style="color:#6b7280;margin-bottom:20px;font-size:14px">Descarga tu diseño listo para producción o compártelo digitalmente.</p>
+      <div class="grid2 mb20">
+        <div class="card" style="text-align:center;padding:28px 20px">
+          <div style="font-size:48px;margin-bottom:12px">🖼️</div>
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:8px">Imagen PNG</h3>
+          <p style="font-size:13px;color:#6b7280;margin-bottom:16px;line-height:1.6">Alta resolución, lista para compartir o llevar a imprenta digital.</p>
+          <button class="bp" style="width:100%" onclick="goTab('editor');setTimeout(exportPNG,300)">📥 Descargar PNG</button>
+        </div>
+        <div class="card" style="padding:28px 20px">
+          <div style="font-size:48px;margin-bottom:12px;text-align:center">📐</div>
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:8px;text-align:center">Medidas estándar</h3>
+          <div style="background:#f9f7f0;border-radius:9px;padding:12px 16px">
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #f0e8d0"><span style="color:#6b7280">Mampara estándar</span><strong>120 × 200 cm</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #f0e8d0"><span style="color:#6b7280">Mampara pequeña</span><strong>90 × 150 cm</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #f0e8d0"><span style="color:#6b7280">Foto grande</span><strong>60 × 90 cm</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span style="color:#6b7280">Backdrop 360°</span><strong>200 × 250 cm</strong></div>
+          </div>
+        </div>
+        <div class="card" style="text-align:center;padding:28px 20px">
+          <div style="font-size:48px;margin-bottom:12px">🤖</div>
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:8px">Generar diseño automático</h3>
+          <p style="font-size:13px;color:#6b7280;margin-bottom:16px;line-height:1.6">Pide al asistente IA un diseño completo con materiales y presupuesto.</p>
+          <button class="bp" style="width:100%" onclick="autoDesign()">⚡ Generar diseño IA</button>
+        </div>
+        <div class="card" style="text-align:center;padding:28px 20px">
+          <div style="font-size:48px;margin-bottom:12px">📋</div>
+          <h3 style="font-size:16px;font-weight:600;margin-bottom:8px">Lista de materiales</h3>
+          <p style="font-size:13px;color:#6b7280;margin-bottom:16px;line-height:1.6">Consulta la guía completa de materiales con costos estimados.</p>
+          <button class="bs" style="width:100%" onclick="goTab('materiales')">📋 Ver materiales</button>
+        </div>
+      </div>
+      <div class="card" style="background:#fffdf0;border-left:4px solid #c9a846">
+        <h3 style="font-size:14.5px;font-weight:600;margin-bottom:10px">💡 Consejos para impresión física</h3>
+        <p style="font-size:13.5px;color:#4b5563;line-height:1.75">Exporta a <strong>300 DPI mínimo</strong> para impresión de calidad. Si llevas el archivo a imprenta, pide perfil de color <strong>CMYK</strong>. Para mamparas de unicel elaboradas a mano, el diseño sirve como <em>guía de proporciones</em>: respeta la jerarquía visual y deja siempre márgenes de al menos 5–8 cm en todos los bordes.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+const PALETTE_PRESETS = [
+  { name:"Dorado Clásico", colors:["#1a1a2e","#c9a846","#f5f0e8","#e8d5a3"], desc:"Elegante y atemporal" },
+  { name:"Vino & Oro",     colors:["#4a1628","#c9a846","#f8f4ed","#d4a0b0"], desc:"Apasionado y festivo" },
+  { name:"Azul Marino",    colors:["#1c2541","#3a7ca5","#f0f4f8","#c9a846"], desc:"Sobrio y distinguido" },
+  { name:"Esmeralda Real", colors:["#1a3a2e","#4a9e72","#f5f8f5","#c9a846"], desc:"Natural y refinado" },
+  { name:"Gris Perla",     colors:["#2d2d2d","#b8a99a","#f7f5f2","#c9a846"], desc:"Moderno y elegante" },
+];
+
+const FONTS_DATA = [
+  { name:"Playfair Display",  style:"'Playfair Display',serif",    category:"Serif Elegante",    use:"Nombre principal y título del evento", size:"72–96pt",  tag:"Jerarquía 1" },
+  { name:"Cormorant Garamond",style:"'Cormorant Garamond',serif",  category:"Serif Clásico",     use:"Subtítulos y subtextos",               size:"36–48pt",  tag:"Jerarquía 2" },
+  { name:"Great Vibes",       style:"'Great Vibes',cursive",       category:"Script Elegante",   use:"Frases emotivas y dedicatorias",       size:"48–60pt",  tag:"Jerarquía 3" },
+  { name:"Montserrat",        style:"'Montserrat',sans-serif",     category:"Sans-serif Moderno",use:"Institución y fechas",                 size:"18–24pt",  tag:"Jerarquía 4" },
+];
+
+const MATERIALS = [
+  { icon:"🔡", title:"Letras de Unicel",
+    items:[{name:"Unicel estándar 3cm",cost:"$$",note:"Para nombres principales"},{name:"Unicel 5cm premium",cost:"$$$",note:"Para títulos de gran impacto"},{name:"Unicel 2cm fino",cost:"$",note:"Para fechas y subtítulos"}],
+    combos:["✨ Unicel + pintura dorada + sombra negra → Clásico elegante","💎 Unicel + diamantina + fondo oscuro → Festivo sofisticado","🎨 Unicel + pintura mate + textura → Moderno minimalista"] },
+  { icon:"🎨", title:"Pinturas y Acabados",
+    items:[{name:"Aerosol dorado metálico",cost:"$$$",note:"Acabado brillante premium"},{name:"Acrílica mate",cost:"$$",note:"Sin reflejos, muy elegante"},{name:"Diamantina extra fina",cost:"$$",note:"Efecto festivo brillante"},{name:"Pintura nacarada",cost:"$$$",note:"Acabado perlado suave"}],
+    combos:[] },
+  { icon:"🧱", title:"Bases y Soportes",
+    items:[{name:"Mampara triplay 12mm",cost:"$$$$",note:"Resistente, 120×240cm"},{name:"Foam board 10mm",cost:"$$",note:"Ligero, fácil de cortar"},{name:"Estructura PVC armable",cost:"$$$",note:"Reutilizable, fácil armado"}],
+    combos:[] },
+  { icon:"✨", title:"Elementos Decorativos",
+    items:[{name:"Flores artificiales premium",cost:"$$$",note:"Rosas, peonías, hortensias"},{name:"Guirnaldas LED cálidas",cost:"$$",note:"5–10m, ambiente cálido"},{name:"Tela organza/chiffon",cost:"$$",note:"Para drapeados y fondos"},{name:"Marco dorado decorativo",cost:"$$$",note:"Para fotos y citas"}],
+    combos:[] },
+];
+
+const DEFAULT_ELEMENTS = [
+  { id:1, type:"text", x:200, y:90,  text:"HOMENAJE DE JUBILACIÓN",          fontSize:20, color:"#c9a846", fontFamily:"Playfair Display", bold:true  },
+  { id:2, type:"text", x:200, y:160, text:"Con profundo cariño y gratitud",  fontSize:17, color:"#e8d5a3", fontFamily:"Great Vibes",       bold:false },
+  { id:3, type:"text", x:200, y:230, text:"Nombre Completo",                 fontSize:34, color:"#ffffff", fontFamily:"Playfair Display", bold:true  },
+  { id:4, type:"text", x:200, y:300, text:"30 Años de Dedicación y Servicio",fontSize:15, color:"#c9a846", fontFamily:"Cormorant Garamond",bold:false },
+  { id:5, type:"text", x:200, y:360, text:"Zona Escolar 40 · Región Ojocaliente",fontSize:12,color:"#9ba8c4",fontFamily:"Montserrat",    bold:false },
+  { id:6, type:"text", x:200, y:400, text:"Zacatecas · Mayo 2024",           fontSize:11, color:"#9ba8c4", fontFamily:"Montserrat",       bold:false },
+];
+
+// ─── STATE ──────────────────────────────────────────────
+let currentTab = "inicio";
+let elements = JSON.parse(JSON.stringify(DEFAULT_ELEMENTS));
+let bgColor = "#1c2541";
+let selectedEl = null;
+let dragging = null;
+let dragOffset = {x:0,y:0};
+let selectedPalette = 0;
+let aiMessages = [];
+let aiLoading = false;
+
+// ─── TAB NAVIGATION ─────────────────────────────────────
+function goTab(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('act'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.tb').forEach(b=>{ if(b.textContent.includes(id.charAt(0).toUpperCase()+id.slice(1))||b.getAttribute('onclick')?.includes("'"+id+"'")) b.classList.add('act'); });
+  currentTab = id;
+  if(id==='editor') drawCanvas();
+}
+
+// ─── INICIO ─────────────────────────────────────────────
+function buildInicio() {
+  const items=[
+    {n:"1",ico:"📂",t:"Sube referencias",d:"Carga imágenes de mamparas o decoraciones que te inspiren.",id:"galeria"},
+    {n:"2",ico:"🎨",t:"Elige tu paleta",d:"Selecciona colores elegantes y sobrios para el evento.",id:"paleta"},
+    {n:"3",ico:"🖼️",t:"Diseña en el editor",d:"Arrastra elementos, edita textos y personaliza tu mampara.",id:"editor"},
+    {n:"4",ico:"🔤",t:"Selecciona tipografías",d:"Aprende qué fuentes usar y en qué jerarquía visual.",id:"tipografia"},
+    {n:"5",ico:"🧱",t:"Consulta materiales",d:"Encuentra los mejores materiales con precios accesibles.",id:"materiales"},
+    {n:"6",ico:"🤖",t:"Consulta al asistente",d:"Pide sugerencias personalizadas con inteligencia artificial.",id:"asistente"},
+  ];
+  document.getElementById('inicio-cards').innerHTML = items.map(i=>`
+    <div class="card hov-card" style="display:flex;gap:14px;align-items:flex-start" onclick="goTab('${i.id}')">
+      <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#c9a846,#e0b84e);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1c2541;flex-shrink:0">${i.n}</div>
+      <div><div style="font-size:22px;margin-bottom:4px">${i.ico}</div><h3 style="font-size:14.5px;font-weight:600;margin-bottom:4px">${i.t}</h3><p style="font-size:13px;color:#6b7280;line-height:1.55">${i.d}</p></div>
+    </div>`).join('');
+}
+
+// ─── GALLERY ────────────────────────────────────────────
+function handleUpload(inp) {
+  Array.from(inp.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{
+      document.getElementById('gallery-empty').style.display='none';
+      const id='img'+Date.now()+Math.random();
+      const div=document.createElement('div');
+      div.className='card'; div.id=id; div.style.padding='10px';
+      div.innerHTML=`<img src="${ev.target.result}" style="width:100%;height:170px;object-fit:cover;border-radius:8px" /><p style="font-size:11.5px;color:#9ba0a8;margin-top:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${f.name}</p><button class="bs" style="width:100%;margin-top:8px;font-size:12px;color:#dc2626;border-color:#fecaca" onclick="document.getElementById('${id}').remove()">Eliminar</button>`;
+      document.getElementById('gallery-grid').appendChild(div);
+    };
+    r.readAsDataURL(f);
+  });
+}
+
+// ─── CANVAS / EDITOR ────────────────────────────────────
+const canvas = ()=>document.getElementById('mampara-canvas');
+const ctx = ()=>canvas().getContext('2d');
+
+function drawCanvas() {
+  const c=canvas(); if(!c) return;
+  const x=ctx();
+  x.clearRect(0,0,c.width,c.height);
+  x.fillStyle=bgColor; x.fillRect(0,0,c.width,c.height);
+  x.strokeStyle='#c9a846'; x.lineWidth=2.5;
+  x.strokeRect(10,10,c.width-20,c.height-20);
+  x.strokeStyle='rgba(201,168,70,.35)'; x.lineWidth=1;
+  x.strokeRect(18,18,c.width-36,c.height-36);
+  [[26,26],[c.width-26,26],[26,c.height-26],[c.width-26,c.height-26]].forEach(([cx,cy])=>{
+    x.fillStyle='#c9a846'; x.beginPath(); x.arc(cx,cy,3.5,0,Math.PI*2); x.fill();
+  });
+  x.strokeStyle='rgba(201,168,70,.4)'; x.lineWidth=1;
+  x.beginPath(); x.moveTo(50,c.height/2+30); x.lineTo(c.width-50,c.height/2+30); x.stroke();
+  elements.forEach(el=>{
+    if(el.type!=='text') return;
+    x.font=`${el.bold?'bold ':''}${el.fontSize}px "${el.fontFamily}", serif`;
+    x.fillStyle=el.color; x.textAlign='center'; x.textBaseline='middle';
+    x.fillText(el.text,el.x,el.y);
+    if(selectedEl===el.id){
+      const m=x.measureText(el.text);
+      const w=m.width+16, h=el.fontSize+12;
+      x.strokeStyle='#60a5fa'; x.lineWidth=1.5;
+      x.setLineDash([4,4]); x.strokeRect(el.x-w/2,el.y-h/2,w,h); x.setLineDash([]);
+    }
+  });
+}
+
+function getPos(e){
+  const c=canvas(); const r=c.getBoundingClientRect();
+  return {x:(e.clientX-r.left)*c.width/r.width, y:(e.clientY-r.top)*c.height/r.height};
+}
+
+function canvasMouseDown(e){
+  const pos=getPos(e); const x=ctx();
+  for(let i=elements.length-1;i>=0;i--){
+    const el=elements[i];
+    x.font=`${el.bold?'bold ':''}${el.fontSize}px "${el.fontFamily}", serif`;
+    const m=x.measureText(el.text);
+    const w=m.width+16, h=el.fontSize+12;
+    if(pos.x>=el.x-w/2&&pos.x<=el.x+w/2&&pos.y>=el.y-h/2&&pos.y<=el.y+h/2){
+      selectedEl=el.id; dragging=el.id; dragOffset={x:pos.x-el.x,y:pos.y-el.y};
+      updateElEditor(); drawCanvas(); return;
+    }
+  }
+  selectedEl=null; updateElEditor(); drawCanvas();
+}
+
+function canvasMouseMove(e){
+  if(!dragging) return;
+  const pos=getPos(e);
+  elements=elements.map(el=>el.id===dragging?{...el,x:pos.x-dragOffset.x,y:pos.y-dragOffset.y}:el);
+  drawCanvas();
+}
+
+function canvasMouseUp(){dragging=null;}
+
+function addText(){
+  const id=Date.now();
+  elements.push({id,type:'text',x:200,y:260,text:'Nuevo texto',fontSize:20,color:'#ffffff',fontFamily:'Playfair Display',bold:false});
+  selectedEl=id; updateElEditor(); renderLayers(); drawCanvas();
+}
+
+function updateEl(key,val){
+  elements=elements.map(el=>el.id===selectedEl?{...el,[key]:val}:el);
+  renderLayers(); drawCanvas();
+}
+
+function deleteEl(){
+  elements=elements.filter(el=>el.id!==selectedEl);
+  selectedEl=null; updateElEditor(); renderLayers(); drawCanvas();
+}
+
+function restoreElements(){
+  elements=JSON.parse(JSON.stringify(DEFAULT_ELEMENTS));
+  selectedEl=null; updateElEditor(); renderLayers(); drawCanvas();
+}
+
+function updateElEditor(){
+  const editor=document.getElementById('el-editor');
+  if(!selectedEl){editor.style.display='none'; return;}
+  const el=elements.find(e=>e.id===selectedEl);
+  if(!el){editor.style.display='none'; return;}
+  editor.style.display='block';
+  document.getElementById('el-text').value=el.text;
+  document.getElementById('el-font').value=el.fontFamily;
+  document.getElementById('el-size').value=el.fontSize;
+  document.getElementById('el-color').value=el.color;
+  document.getElementById('el-bold').checked=el.bold;
+}
+
+function renderLayers(){
+  document.getElementById('layers-list').innerHTML=elements.map(el=>`
+    <div class="layers-item${selectedEl===el.id?' sel':''}" onclick="selectLayer(${el.id})">
+      <span>🔤</span><span>${el.text}</span>
+    </div>`).join('');
+}
+
+function selectLayer(id){selectedEl=id; updateElEditor(); drawCanvas();}
+
+function exportPNG(){
+  drawCanvas();
+  const link=document.createElement('a');
+  link.download='mampara-jubilacion.png';
+  link.href=canvas().toDataURL('image/png');
+  link.click();
+}
+
+function buildBgSwatches(){
+  const colors=["#1c2541","#4a1628","#1a3a2e","#2c2c2c","#f5f0e8","#2d3748"];
+  document.getElementById('bg-swatches').innerHTML=colors.map(c=>`
+    <div onclick="setBg('${c}')" style="width:30px;height:30px;border-radius:7px;background:${c};cursor:pointer;border:2.5px solid ${bgColor===c?'#c9a846':'transparent'};transition:border .15s;flex-shrink:0" data-color="${c}"></div>`).join('')
+    +`<input type="color" value="${bgColor}" oninput="setBg(this.value)" title="Color personalizado" style="width:30px;height:30px;border:1.5px solid #e2d8c0;border-radius:7px;cursor:pointer;padding:2px">`;
+}
+
+function setBg(c){bgColor=c; buildBgSwatches(); drawCanvas();}
+
+// ─── PALETAS ────────────────────────────────────────────
+function buildPalettes(){
+  document.getElementById('palette-grid').innerHTML=PALETTE_PRESETS.map((p,i)=>`
+    <div class="card hov-card pal-card${selectedPalette===i?' sel':''}" onclick="selectPalette(${i})">
+      <div style="display:flex;gap:7px;margin-bottom:12px">${p.colors.map(c=>`<div style="flex:1;height:44px;border-radius:7px;background:${c};box-shadow:0 2px 6px rgba(0,0,0,.15)"></div>`).join('')}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><h3 style="font-size:14.5px;font-weight:600">${p.name}</h3><p style="font-size:12px;color:#6b7280">${p.desc}</p></div>
+        ${selectedPalette===i?'<span style="color:#c9a846;font-size:22px">✓</span>':''}
+      </div>
+    </div>`).join('');
+  renderPalettePreview();
+}
+
+function selectPalette(i){selectedPalette=i; buildPalettes();}
+
+function renderPalettePreview(){
+  const p=PALETTE_PRESETS[selectedPalette];
+  document.getElementById('palette-preview').innerHTML=`
+    <div style="background:${p.colors[0]};padding:44px 30px;text-align:center">
+      <p style="font-family:'Montserrat',sans-serif;font-size:11px;color:${p.colors[1]};letter-spacing:4px;text-transform:uppercase;margin-bottom:14px">HOMENAJE DE JUBILACIÓN</p>
+      <p style="font-family:'Great Vibes',cursive;font-size:28px;color:${p.colors[3]};margin-bottom:10px">Con profundo cariño</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:38px;color:${p.colors[2]};margin-bottom:10px">Nombre del Maestro</h2>
+      <p style="color:${p.colors[1]};font-size:15px;margin-bottom:20px">30 Años de Dedicación y Servicio</p>
+      <div style="width:52px;height:2px;background:${p.colors[1]};margin:0 auto 14px"></div>
+      <p style="color:${p.colors[2]};font-size:11px;opacity:.65">Zona Escolar 40 · Ojocaliente, Zacatecas</p>
+    </div>`;
+  document.getElementById('palette-desc').innerHTML=`<strong>${p.name}</strong> usa contraste alto entre fondo y texto principal, con un acento dorado que comunica <em>distinción y emotividad</em>. Es ideal para jubilaciones docentes porque transmite respeto y celebración sin saturar visualmente.`;
+}
+
+// ─── TIPOGRAFÍA ─────────────────────────────────────────
+function buildTipografia(){
+  const hierarchy=[
+    {level:"J1",use:"Nombre del homenajeado",  size:"72–96pt", font:"Playfair Display Bold",   color:"#c9a846",ex:"Mtra. Rosa García López",            style:"'Playfair Display',serif", exSize:28, bold:true},
+    {level:"J2",use:"Título del evento",        size:"36–48pt", font:"Playfair Display",        color:"#1c2541",ex:"Homenaje de Jubilación",               style:"'Playfair Display',serif", exSize:20, bold:false},
+    {level:"J3",use:"Frase emotiva / dedicatoria",size:"28–40pt",font:"Great Vibes",            color:"#4a7a41",ex:"Gracias por iluminar tantas vidas",    style:"'Great Vibes',cursive",    exSize:22, bold:false},
+    {level:"J4",use:"Institución y zona escolar",size:"18–24pt",font:"Montserrat Medium",       color:"#6b7280",ex:"Zona Escolar 40 · Región Ojocaliente",style:"'Montserrat',sans-serif",  exSize:14, bold:false},
+    {level:"J5",use:"Fecha y detalles del evento",size:"14–18pt",font:"Montserrat Light",       color:"#9ca3af",ex:"Mayo 2024 · 30 Años de Servicio",      style:"'Montserrat',sans-serif",  exSize:13, bold:false},
+  ];
+  document.getElementById('tipo-hierarchy').innerHTML=hierarchy.map((item,i)=>`
+    <div style="display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:${i<4?'1px solid #f0e8d0':'none'};flex-wrap:wrap">
+      <span class="tag" style="background:#f0e8d0;color:#1c2541;min-width:28px;text-align:center">${item.level}</span>
+      <div style="min-width:180px"><p style="font-size:13px;font-weight:600;margin-bottom:2px">${item.use}</p><p style="font-size:11.5px;color:#9ba0a8">${item.font} · ${item.size}</p></div>
+      <span style="font-family:${item.style};font-size:${item.exSize}px;color:${item.color};font-weight:${item.bold?'bold':'normal'}">${item.ex}</span>
+    </div>`).join('');
+
+  document.getElementById('font-showcase').innerHTML=FONTS_DATA.map(f=>`
+    <div class="card">
+      <span class="tag" style="background:#e8f4f8;color:#1c6b8a;margin-bottom:10px;display:inline-block">${f.tag} · ${f.category}</span>
+      <p style="font-family:${f.style};font-size:${f.name==='Great Vibes'?34:f.name==='Playfair Display'?26:20}px;color:#1c2541;margin-bottom:10px">${f.name}</p>
+      <p style="font-family:${f.style};font-size:${f.name==='Great Vibes'?18:13}px;color:#6b7280;margin-bottom:8px">ABCDEFGHIJKLM · abcdefghijklm · 1234567890</p>
+      <p style="font-size:12.5px;color:#4b5563">✅ ${f.use}</p>
+      <p style="font-size:12px;color:#9ba0a8">📐 Tamaño recomendado: <strong>${f.size}</strong></p>
+    </div>`).join('');
+
+  document.getElementById('tipo-errors').innerHTML=[
+    "Usar más de 3 fuentes distintas en una misma mampara",
+    "Usar 2 fuentes script (tipo Great Vibes) en el mismo diseño — compiten entre sí",
+    "Tamaños muy similares en elementos de diferente jerarquía — elimina la distinción",
+    "Texto oscuro sobre fondo oscuro: contraste insuficiente = ilegible",
+    "Comic Sans, Arial o Times New Roman en un evento formal",
+    "Abusar de mayúsculas en textos largos — dificulta la lectura",
+  ].map(e=>`<p style="font-size:13px;color:#6b7280;margin-bottom:6px">❌ ${e}</p>`).join('');
+}
+
+// ─── MATERIALES ─────────────────────────────────────────
+function buildMateriales(){
+  document.getElementById('materials-grid').innerHTML=MATERIALS.map(cat=>`
+    <div class="card">
+      <h3 style="font-size:15.5px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:9px"><span style="font-size:24px">${cat.icon}</span>${cat.title}</h3>
+      ${cat.items.map((item,j)=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:${j<cat.items.length-1?'1px solid #f0e8d0':'none'}">
+          <div><p style="font-size:13.5px;font-weight:500">${item.name}</p><p style="font-size:12px;color:#6b7280">${item.note}</p></div>
+          <span class="tag" style="background:#f0e8d0;color:#b07d20">${item.cost}</span>
+        </div>`).join('')}
+      ${cat.combos.length?`<div style="margin-top:14px;background:#fffdf0;border-radius:9px;padding:10px 12px"><p style="font-size:11.5px;font-weight:600;color:#c9a846;margin-bottom:8px">✨ Combinaciones recomendadas</p>${cat.combos.map(c=>`<p style="font-size:12px;color:#6b7280;margin-bottom:4px">${c}</p>`).join('')}</div>`:''}
+    </div>`).join('');
+
+  document.getElementById('budget-grid').innerHTML=[
+    {l:"Mampara básica",    p:"$300 – 600",    d:"Foam board + pintura + letras de unicel simples"},
+    {l:"Mampara intermedia",p:"$800 – 1,500",  d:"Triplay + flores artificiales + guirnaldas LED"},
+    {l:"Mampara premium",   p:"$2,000 – 4,000",d:"Estructura PVC + flores + letras acrílicas iluminadas"},
+  ].map(b=>`
+    <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+      <p style="font-size:12.5px;color:#c9a846;font-weight:600;margin-bottom:4px">${b.l}</p>
+      <p style="font-size:22px;font-weight:700;color:white;margin-bottom:5px">${b.p}</p>
+      <p style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.5">${b.d}</p>
+    </div>`).join('');
+}
+
+// ─── ASISTENTE IA ────────────────────────────────────────
+function buildAiChips(){
+  const chips=[
+    "¿Qué paleta de colores recomiendas para una jubilación formal?",
+    "¿Cómo distribuyo el texto para que se vea equilibrado?",
+    "Dame ideas de decoración con presupuesto limitado",
+    "¿Qué tamaño deben tener las letras de unicel para el nombre?",
+  ];
+  document.getElementById('ai-chips').innerHTML=chips.map(p=>`<button class="chip" onclick="sendMsg('${p.replace(/'/g,"\\'")}')"> ${p}</button>`).join('');
+}
+
+function renderMessages(){
+  const cont=document.getElementById('ai-messages');
+  const empty=document.getElementById('ai-empty');
+  if(aiMessages.length>0) empty.style.display='none'; else {empty.style.display=''; return;}
+  const existing=cont.querySelectorAll('.msg-user,.msg-ai');
+  existing.forEach(e=>e.remove());
+  aiMessages.forEach(msg=>{
+    const div=document.createElement('div');
+    if(msg.role==='user'){
+      div.className='msg-user';
+      div.innerHTML=`<div class="msg-bubble-user">${msg.content}</div>`;
+    } else {
+      div.className='msg-ai';
+      div.innerHTML=`<div class="ai-avatar">🤖</div><div class="msg-bubble-ai">${msg.content}</div>`;
+    }
+    cont.insertBefore(div, cont.querySelector('#ai-loading'));
+  });
+  cont.scrollTop=cont.scrollHeight;
+}
+
+async function sendMsg(override){
+  const text = override || document.getElementById('ai-input').value;
+  if(!text.trim()||aiLoading) return;
+  document.getElementById('ai-input').value='';
+  aiMessages.push({role:'user',content:text});
+  renderMessages();
+  aiLoading=true;
+  document.getElementById('ai-send').disabled=true;
+
+  let loadingDiv=document.createElement('div');
+  loadingDiv.id='ai-loading'; loadingDiv.className='msg-ai';
+  loadingDiv.innerHTML=`<div class="ai-avatar">🤖</div><div class="msg-bubble-ai" style="color:#9ba0a8">✨ Generando respuesta...</div>`;
+  document.getElementById('ai-messages').appendChild(loadingDiv);
+  document.getElementById('ai-messages').scrollTop=99999;
+
+  try {
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer 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'},
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        max_tokens:1000,
+        messages:[
+          {role:'system',content:`Eres un experto diseñador de mamparas decorativas para eventos escolares formales en México, especialmente jubilaciones docentes.
+Contexto: Evento de jubilación docente en la Zona Escolar 40, Región Ojocaliente, Zacatecas.
+Responde siempre en español. Sé práctico, específico y motivador.
+Estructura tus respuestas con: 🎨 Paleta de colores (con códigos hex), 🔤 Tipografía sugerida, 🧱 Materiales recomendados, 💡 Tip de diseño.
+Considera materiales económicos disponibles en México (unicel, pintura, tela, flores artificiales).`},
+          ...aiMessages.map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.content}))
+        ]
+      })
+    });
+    const data=await res.json();
+    loadingDiv.remove();
+    aiMessages.push({role:'assistant',content:data.choices?.[0]?.message?.content||'Error al generar respuesta.'});
+  } catch {
+    loadingDiv.remove();
+    aiMessages.push({role:'assistant',content:'Error de conexión. Verifica tu red e intenta de nuevo.'});
+  }
+  aiLoading=false;
+  document.getElementById('ai-send').disabled=false;
+  renderMessages();
+}
+
+function autoDesign(){
+  goTab('asistente');
+  setTimeout(()=>sendMsg('Genera un diseño completo para mampara de jubilación docente formal. Incluye: descripción detallada del diseño, paleta de colores exacta con códigos hex, tipografías específicas, lista de materiales con costos aproximados en pesos mexicanos, composición/distribución de elementos y mensajes sugeridos para incluir.'),150);
+}
+
+// ─── INIT ────────────────────────────────────────────────
+window.onload=function(){
+  buildInicio();
+  buildPalettes();
+  buildTipografia();
+  buildMateriales();
+  buildAiChips();
+
+  const c=canvas();
+  c.addEventListener('mousedown', canvasMouseDown);
+  c.addEventListener('mousemove', canvasMouseMove);
+  c.addEventListener('mouseup',   canvasMouseUp);
+  c.addEventListener('mouseleave',canvasMouseUp);
+
+  buildBgSwatches();
+  renderLayers();
+  drawCanvas();
+
+  // Fix sidebar active state
+  document.querySelectorAll('.tb').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.tb').forEach(x=>x.classList.remove('act'));
+      b.classList.add('act');
+    });
+  });
+};
+</script>
+</body>
+</html>
